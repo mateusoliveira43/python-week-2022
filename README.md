@@ -1,117 +1,155 @@
-# python-week-2022
+# Python Week 2022
 
-Template Para a Python Week 2022 - 25 a 29 de Abril na Linux Tips
-
-## Instruções
-
-Este repositório é um template de um projeto Python mínimo.  
-O programa se chama `beerlog` e está organizado com pastas
-e módulos, porém a maioria dos arquivos encontra-se vazio.
-
-A partir deste template você poderá acompanhar as lives  
-da Python week e programar junto com o Bruno e o Jeferson.
+Minha versão do projeto desenvolvido durante a [Python Week 2022 - 25 a 29 de Abril na Linux Tips](https://www.youtube.com/watch?v=NqUC-G_Pu-o&list=PLf-O3X2-mxDlfAv8IOfic1sHArdwrrkgh)
 
 ## Obtendo seu repositório
 
-01. Faça login no github (cadastre-se gratuitamente caso ainda não tenha uma conta)
-00. Crie um **fork** (cópia) deste repositório clicando em [fork](https://github.com/rochacbruno/python-week-2022/fork)
-00. O seu repositório estará em https:// github.com / SEUNOME / python-week-2022
-00. Copie a URL do seu repositório (você vai precisar depois)
-
-## Preparando o ambiente
-
-> **OBS**: substitua `SEUNOME` pelo seu nome de usuário do github.
-
-- Você pode rodar localmente em seu computador desde que tenha o Python 3.8+
-  - Para rodar localmente faça o clone com `git clone https://github.com/SEUNOME/python-week-2022`
-  - Acesse a pasta `cd python-week-2022`
-- Você pode rodar no [https://gitpod.io](https://gitpod.io) **recomendado**
-  - Para rodar no gitpod acesse no navegador `https://gitpod.io/#https://github.com/SEUNOME/python-week-2022`
-  - **OBS**: O plano free do gitpod permite o uso de 40 horas do ambiente.
-- Você pode rodar no [https://replit.com/](https://replit.com/) diretamente no browser
-  - Para rodar no replit, crie um replit e escolha a opção `importar do github` e informe o repositório
-  - **OBS**: O replit.com tem limite de consumo de memória e CPU
-- Ou em qualquer plataforma que permita executar Python 3.8
+1. Faça login no github (cadastre-se gratuitamente caso ainda não tenha uma conta)
+1. Crie um **fork** (cópia) do repositório da Python Week 2022 clicando em [fork](https://github.com/rochacbruno/python-week-2022/fork)
+1. O seu repositório estará em `https://github.com/<SEU_USUARIO>/python-week-2022`
+1. Para rodar localmente faça o clone com `git clone https://github.com/<SEU_USUARIO>/python-week-2022`
+1. Para acessar a pasta, execute `cd python-week-2022`
 
 ## Requisitos
 
-Este template utiliza o gerenciador de pacotes **poetry**
+Para rodar o projeto, as seguintes ferramentas são necessárias:
 
-### Se estiver rodando no Linux no seu ambiente local
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-`execute o comando abaixo para instalar o Poetry no Linux`
+ou
 
-```bash
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-```
+- Python 3.8
+- [Poetry](https://python-poetry.org/docs/#installation)
 
-`Em outros ambientes pode instalar com`
+## Iniciando o ambiente
 
-```bash
-pip install --user poetry
-```
+### Docker
 
-> No replit.com o poetry já está disponível e no gitpod será instalado assim que o ambiente iniciar.
-
-## Instalando o ambiente
-
-O comando a seguir instala as dependências do projeto.
-
-```bash
-poetry install
-```
-
-O comando a seguir ativa o ambiente virtual do poetry
-
-```bash
-poetry shell
-```
-
-> **IMPORTANTE** o ambiente precisa estar ativado para o programa executar.  
-> No terminal aparecerá algo como  
-> `(beerlog-DlEBh_72-py3.8) gitpod /workspace/python-week-2022 (main) $`
-
-Executando o programa
-
-```bash
-beerlog
-# ou
-python -m beerlog
-```
-
-Se apareceu `Hello from beerlog` então está tudo certo.
-
-
-## Está com problemas com instalação ou autocomplete no gitpod?
+TODO
 
 ### Poetry
 
-Para o programa rodar o ambiente poetry precisa estar ativado
-
-```
-pip install poetry
+O comando a seguir instala as dependências do projeto
+```bash
 poetry install
+```
+
+O comando a seguir ativa o ambiente virtual do `Poetry`
+```bash
 poetry shell
 ```
 
-Ou execute `source start_poetry` que é um script que automatiza os comandos acima.
-
-### Autocomplete não funciona?
-
-Após ativar o poetry digite no terminal
-
-```
-which python 
-```
-A saida será algo como
-
-```
-/home/gitpod/.cache/pypoetry/virtualenvs/beerlog-DlEBh_72-py3.8/bin/python
+O comando a seguir executa o programa
+```bash
+beerlog
 ```
 
-Copie este path ^
+Ou execute `source scripts/start_poetry.sh` que é um script que automatiza todos os comandos acima.
 
-Agora digite `F1` no gitpod ou `Ctrl + Shift + P` no Vscode local e selectione a opção `Python: Select Interpreter`
-Cole o path `/home/gitpod/.cache/pypoetry/virtualenvs/beerlog-DlEBh_72-py3.8/bin/python` e digite enter.
+Para desativar o ambiente virtual do `Poetry`, execute `CTRL+D` ou `exit`.
 
-> **OBS**: Pode ser que o caminho seja outro, o importante é terminar com `/bin/python`
+## Qualidade
+
+Para rodar as métricas de qualidade do projeto, é necessário instalar as dependências do projeto e ter o ambiente virtual ativo.
+
+As métricas de qualidade do modelo são reproduzidas pelas etapas de integração contínua do projeto. Configurações das etapas de integração contínua descritas no arquivo `.github/workflows/ci.yml`.
+
+### Testes
+
+Para rodar os testes e relatório de cobertura, execute
+```
+pytest
+```
+
+Para ver o relatório html, confira `tests/coverage-results/htmlcov/index.html`.
+
+Configurações dos testes e relatório de cobertura descritas no arquivo `pyproject.toml`.
+
+### Checagem de tipo
+
+Para rodar o checador de tipo do Python, execute
+```
+mypy .
+```
+
+Configurações do checador de tipo do Python descritas no arquivo `pyproject.toml`.
+
+### Linter
+
+Para rodar o linter de código Python, execute
+```
+prospector
+```
+
+Configurações do linter de Python descritas no arquivo `.prospector.yaml`.
+
+### Formatadores de código
+
+Para checar o formato das importações no código Python, execute
+```
+isort --check --diff .
+```
+
+Para formatar as importações no código Python, execute
+```
+isort .
+```
+
+Para checar o formato do código Python, execute
+```
+black --check --diff .
+```
+
+Para formatar o código Python, execute
+```
+black .
+```
+
+Configurações do isort e black descritas no arquivo `pyproject.toml`.
+
+Para checar o formato de todos os arquivos do repositório, execute
+```
+ec -verbose
+```
+
+Configurações do formato dos arquivos descritas no arquivo `.editorconfig`.
+
+### Varredura de vulnerabilidades de segurança
+
+Para checar problemas de segurança comuns no código Python, execute
+```
+bandit --recursive beerlog
+```
+
+Para checar vulnerabilidades de segurança conhecidas nas dependências Python, execute
+```
+safety check --file requirements/prod.txt --full-report
+safety check --file requirements/dev.txt --full-report
+```
+
+## Pre-commit
+
+Para configurar o pre-commit automaticamente ao clonar o repositório, execute
+```
+pip install pre-commit
+git config --global init.templateDir ~/.git-template
+pre-commit init-templatedir --hook-type commit-msg --hook-type pre-commit ~/.git-template
+```
+Precisa ser instalado de forma global. Mais informações em https://pre-commit.com/#automatically-enabling-pre-commit-on-repositories
+
+Para configurar o pre-commit localmente, execute
+```
+pip install pre-commit
+pre-commit install --hook-type commit-msg --hook-type pre-commit
+```
+com seu ambiente virtual ativo.
+
+Para testá-lo, execute
+```
+pre-commit run --all-files
+```
+
+## Licença
+
+Esse repositório é licenciado sob os termos da [Licença](LICENSE).
