@@ -3,10 +3,10 @@ name: Continuos Integration
 on:
   push:
     branches:
-      - main
+      - mateus-version
   pull_request:
     branches:
-      - main
+      - mateus-version
 
 jobs:
   python-check:

@@ -131,3 +131,6 @@ dmypy.json
 # Documentation
 docs/modules
 public
+
+# Database
+beerlog.db

@@ -1,5 +1,8 @@
-from .config import settings
+"""Beerlog CLI implementation."""
+
+from beerlog.config import settings
 
 
-def main():
+def main() -> None:
+    """Parse user inputs in service CLI."""
     print("Hello from", settings.NAME)

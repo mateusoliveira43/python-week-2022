@@ -51,6 +51,12 @@ python_version = "3.8"
 strict = true
 show_error_codes = true
 
+[[tool.mypy.overrides]]
+module = [
+    "dynaconf",
+]
+ignore_missing_imports = true
+
 [tool.isort]
 profile = "black"
 line_length = 79

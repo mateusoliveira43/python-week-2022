@@ -25,6 +25,11 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.githubpages",
 ]
+nitpick_ignore = [
+    ("py:class", "datetime.datetime"),
+    ("py:class", "sqlmodel.main.SQLModel"),
+    ("py:class", "pydantic.fields.ModelField"),
+]
 
 
 # -- Options for HTML output -------------------------------------------------

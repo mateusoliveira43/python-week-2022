@@ -1,0 +1,1 @@
+"""Beerlog core functionalities."""
