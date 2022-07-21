@@ -1,20 +1,15 @@
 """Test of project's core functionalities."""
 
-from unittest.mock import Mock, patch
-
 from beerlog.core import add_beer_to_database, get_beers_from_database
 from beerlog.models import Beer
-from tests import DatabaseForTest
+from tests.conftest import DatabaseForTest
 
 
 class TestAdd(DatabaseForTest):
     # noqa: D101 pylint: disable=missing-class-docstring
 
-    # TODO remove mocks, add responsibility to class
-    @patch("beerlog.core.get_session")
-    def test_add(self, mock_get_session: Mock) -> None:
+    def test_add(self) -> None:
         # noqa: D102 pylint: disable=missing-function-docstring
-        mock_get_session.return_value = self.session
         response = add_beer_to_database(
             name="Patagonia", style="IPA", flavor=8, image=6, cost=4
         )
@@ -28,10 +23,8 @@ class TestAdd(DatabaseForTest):
 class TestListEmpty(DatabaseForTest):
     # noqa: D101 pylint: disable=missing-class-docstring
 
-    @patch("beerlog.core.get_session")
-    def test_list_empty(self, mock_get_session: Mock) -> None:
+    def test_list_empty(self) -> None:
         # noqa: D102 pylint: disable=missing-function-docstring
-        mock_get_session.return_value = self.session
         beers = get_beers_from_database()
         assert len(beers) == 0
 
@@ -55,9 +48,7 @@ class TestListNotEmpty(DatabaseForTest):
         cls.session.add(Beer(name="Brahma", **common_info))
         cls.session.commit()
 
-    @patch("beerlog.core.get_session")
-    def test_list_not_empty(self, mock_get_session: Mock) -> None:
+    def test_list_not_empty(self) -> None:
         # noqa: D102 pylint: disable=missing-function-docstring
-        mock_get_session.return_value = self.session
         beers = get_beers_from_database()
         assert len(beers) == 2

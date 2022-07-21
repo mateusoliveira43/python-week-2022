@@ -5,7 +5,7 @@
 import subprocess  # nosec
 from typing import List, Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 
 from beerlog.core import get_beers_from_database
 from beerlog.database import get_session
@@ -15,7 +15,9 @@ from beerlog.serializers import BeerIn, BeerOut
 api = FastAPI(title="Beerlog")
 
 
-@api.post("/beers/", response_model=BeerOut)
+@api.post(
+    "/beers/", response_model=BeerOut, status_code=status.HTTP_201_CREATED
+)
 async def add_beers(beer_in: BeerIn) -> Beer:
     """
     Add a beer to service database.

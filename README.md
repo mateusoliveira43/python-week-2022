@@ -1,5 +1,11 @@
 # Python Week 2022
 
+[![Integração Contínua](https://github.com/mateusoliveira43/python-week-2022/actions/workflows/ci.yml/badge.svg)](https://github.com/mateusoliveira43/python-week-2022/actions)
+[![Importações: isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
+[![Estilo de código: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![segurança: bandit](https://img.shields.io/badge/security-bandit-yellow.svg)](https://github.com/PyCQA/bandit)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+
 Minha versão do projeto desenvolvido durante a [Python Week 2022 - 25 a 29 de Abril na Linux Tips](https://www.youtube.com/watch?v=NqUC-G_Pu-o&list=PLf-O3X2-mxDlfAv8IOfic1sHArdwrrkgh)
 
 ## Obtendo seu repositório

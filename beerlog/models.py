@@ -6,11 +6,7 @@ from typing import Dict, Optional
 
 from pydantic import validator
 from pydantic.fields import ModelField  # pylint: disable=no-name-in-module
-from sqlmodel import Field, SQLModel, create_engine
-
-from beerlog.config import settings
-
-engine = create_engine(settings.database.url)
+from sqlmodel import Field, SQLModel
 
 
 class Beer(SQLModel, table=True):

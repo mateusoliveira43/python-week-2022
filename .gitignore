@@ -137,4 +137,3 @@ beerlog.db
 
 # Tests
 tests/coverage-results
-tests/test.db
