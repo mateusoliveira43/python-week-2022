@@ -40,12 +40,17 @@ O comando a seguir ativa o ambiente virtual do `Poetry`
 poetry shell
 ```
 
-O comando a seguir executa o programa
+Ou execute `source scripts/start_poetry.sh` que é um script que automatiza todos os comandos acima.
+
+O comando a seguir executa o serviço de interface de linha de comando
 ```bash
-beerlog
+beerlog_cli
 ```
 
-Ou execute `source scripts/start_poetry.sh` que é um script que automatiza todos os comandos acima.
+O comando a seguir executa o serviço de API
+```
+beerlog_api
+```
 
 Para desativar o ambiente virtual do `Poetry`, execute `CTRL+D` ou `exit`.
 
