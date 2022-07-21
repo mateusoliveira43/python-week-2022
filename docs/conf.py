@@ -28,7 +28,10 @@ extensions = [
 nitpick_ignore = [
     ("py:class", "datetime.datetime"),
     ("py:class", "sqlmodel.main.SQLModel"),
+    ("py:class", "sqlmodel.orm.session.Session"),
     ("py:class", "pydantic.fields.ModelField"),
+    ("py:class", "pydantic.main.BaseModel"),
+    ("py:exc", "fastapi.HTTPException"),
 ]
 
 

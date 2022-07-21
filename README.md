@@ -133,6 +133,23 @@ safety check --file requirements/prod.txt --full-report
 safety check --file requirements/dev.txt --full-report
 ```
 
+### Documentação
+
+Para checar a geração de documentação do código Python, execute
+```
+sphinx-apidoc --module-first --private --output-dir docs/modules beerlog
+sphinx-build -W -T -v -n docs public
+```
+
+Para gerar a documentação do código Python, execute
+```
+sphinx-apidoc --module-first --private --output-dir docs/modules beerlog
+sphinx-build -v -n docs public
+```
+Para ver a documentação, confira `public/index.html`.
+
+Configuração do Sphinx no arquivo [`docs/conf.py`](docs/conf.py).
+
 ## Pre-commit
 
 Para configurar o pre-commit automaticamente ao clonar o repositório, execute

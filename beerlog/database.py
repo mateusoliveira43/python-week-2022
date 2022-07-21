@@ -21,7 +21,7 @@ def get_session() -> Session:
 
     Returns
     -------
-    Session
+    sqlmodel.orm.session.Session
         Session to manipulate service database.
 
     """

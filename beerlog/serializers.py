@@ -53,7 +53,7 @@ class BeerIn(BaseModel):
 
         Raises
         ------
-        HTTPException
+        fastapi.HTTPException
             If user input was invalid.
 
         """

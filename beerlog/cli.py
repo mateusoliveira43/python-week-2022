@@ -30,11 +30,11 @@ def add(
         Beer's name.
     style : str
         Beer's style.
-    flavor : int, optional
+    flavor : int
         Beer's flavor, by default typer.Option(...)
-    image : int, optional
+    image : int
         Beer's image, by default typer.Option(...)
-    cost : int, optional
+    cost : int
         Beer's cost, by default typer.Option(...)
 
     """
@@ -56,7 +56,7 @@ def list_beers(style: Optional[str] = None) -> None:
 
     Parameters
     ----------
-    style : Optional[str], optional
+    style : Optional[str]
         Beer's style, by default None
 
     """
