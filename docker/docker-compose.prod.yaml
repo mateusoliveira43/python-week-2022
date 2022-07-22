@@ -1,0 +1,20 @@
+services:
+  beerlog:
+    container_name: ${PROJECT_NAME}
+    image: ${PROJECT_NAME}
+    user: ${PROJECT_NAME}
+    hostname: docker
+    working_dir: ${WORK_DIR}
+    ports:
+      - ${PORT}:${PORT}
+    entrypoint: ["uvicorn", "beerlog.api:api"]
+    command: ["--host=$HOST", "--port=$PORT"]
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: production
+      args:
+        PROJECT_NAME: ${PROJECT_NAME}
+        WORK_DIR: ${WORK_DIR}
+        USER_ID: ${USER_ID}
+        GROUP_ID: ${GROUP_ID}

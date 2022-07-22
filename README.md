@@ -32,7 +32,33 @@ ou
 
 ### Docker
 
-TODO
+Para se conectar na shell do container Docker do projeto, execute
+```
+scripts/run.sh
+```
+Não é necessário ter um ambiente virtual ativo no container.
+
+Para sair da shell do container, execute `CTRL+D` ou `exit`.
+
+Para rodar o serviço de API, execute
+```
+scripts/up.sh <modo>
+```
+Alterando `<modo>` por `dev` (para modo de desenvolvimento) ou `prod` (para modo de produção).
+
+Para parar o serviço, execute `CTRL+C`.
+
+Para rodar o linter de arquivos Dockerfile, execute
+```
+scripts/lint.sh
+```
+
+Para remover os containers, imagens, volumes e redes do projeto, execute
+```
+scripts/down.sh
+```
+
+Para mudar a configuração do Docker, altere as variáveis no arquivo `.env`.
 
 ### Poetry
 
@@ -48,6 +74,12 @@ poetry shell
 
 Ou execute `source scripts/start_poetry.sh` que é um script que automatiza todos os comandos acima.
 
+Para desativar o ambiente virtual do `Poetry`, execute `CTRL+D` ou `exit`.
+
+## Rodando o projeto
+
+Rode esses comandos na sua shell, após ter inicializado seu ambiente.
+
 O comando a seguir executa o serviço de interface de linha de comando
 ```bash
 beerlog_cli
@@ -57,8 +89,6 @@ O comando a seguir executa o serviço de API
 ```
 beerlog_api
 ```
-
-Para desativar o ambiente virtual do `Poetry`, execute `CTRL+D` ou `exit`.
 
 ## Qualidade
 

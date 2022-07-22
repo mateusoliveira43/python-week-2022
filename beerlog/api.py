@@ -7,6 +7,7 @@ from typing import List, Optional
 
 from fastapi import FastAPI, status
 
+from beerlog.config import settings
 from beerlog.core import get_beers_from_database
 from beerlog.database import get_session
 from beerlog.models import Beer
@@ -58,7 +59,11 @@ async def list_beers() -> List[Optional[Beer]]:
 
 def main() -> None:
     """Start Beerlog API."""
-    command = "uvicorn beerlog.api:api --reload"
+    command = (
+        "uvicorn beerlog.api:api "
+        f"--host={settings.api.host} --port={settings.api.port} "
+        "--reload"
+    )
     try:
         subprocess.run(
             command, shell=True, check=True, encoding="utf-8"  # nosec
