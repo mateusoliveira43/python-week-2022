@@ -5,7 +5,7 @@ ARG USER_ID=1000
 ARG PYTHON_VERSION=3.8.13
 ARG POETRY_VERSION=1.1.13
 
-FROM python:$PYTHON_VERSION as common
+FROM python:$PYTHON_VERSION as base
 ARG PROJECT_NAME
 ARG WORK_DIR
 ARG GROUP_ID
@@ -22,7 +22,7 @@ USER $PROJECT_NAME
 RUN mkdir "$WORK_DIR"
 WORKDIR $WORK_DIR
 
-FROM common as staging
+FROM base as setup
 ARG PROJECT_NAME
 ARG POETRY_VERSION
 
@@ -35,17 +35,16 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/inst
 COPY ./poetry.lock ./pyproject.toml ./
 COPY ./$PROJECT_NAME ./$PROJECT_NAME
 
-# TODO do not run this step in production mode
-FROM staging as development
+FROM setup as development
 
 RUN poetry install
 
-FROM staging as build
+FROM setup as build
 
 RUN poetry build --format wheel \
     && poetry export --format requirements.txt --output constraints.txt --without-hashes
 
-FROM common as production
+FROM base as production
 ARG PROJECT_NAME
 ARG WORK_DIR
 

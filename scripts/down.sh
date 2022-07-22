@@ -10,3 +10,4 @@ do
     --project-directory $ROOT \
     down --volumes --rmi 'all'
 done
+docker builder prune --force

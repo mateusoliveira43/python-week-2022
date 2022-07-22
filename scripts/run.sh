@@ -9,7 +9,7 @@ while read line; do
     fi
 done < $ROOT/.env
 
-docker-compose \
+DOCKER_BUILDKIT=1 docker-compose \
 --file $ROOT/docker/docker-compose.dev.yaml \
 --project-directory $ROOT \
 run --rm --service-ports $PROJECT_NAME /bin/bash

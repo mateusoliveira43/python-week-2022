@@ -9,7 +9,7 @@ while read line; do
     fi
 done < $ROOT/.env
 
-docker-compose \
+DOCKER_BUILDKIT=1 docker-compose \
 --file $ROOT/docker/docker-compose.$1.yaml \
 --project-directory $ROOT \
 up
