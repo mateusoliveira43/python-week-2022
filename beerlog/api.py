@@ -60,8 +60,9 @@ async def list_beers() -> List[Optional[Beer]]:
 def main() -> None:
     """Start Beerlog API."""
     command = (
-        "uvicorn beerlog.api:api "
-        f"--host={settings.api.host} --port={settings.api.port} "
+        "uvicorn beerlog.api:api "  # nosec
+        f"--host={settings.get('API_HOST', default='0.0.0.0')} "
+        f"--port={settings.get('API_PORT', default=8000)} "
         "--reload"
     )
     try:

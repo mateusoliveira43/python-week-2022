@@ -7,13 +7,13 @@ from sqlmodel import Session, create_engine
 from sqlmodel.sql.expression import Select, SelectOfScalar
 
 from beerlog import models
-from beerlog.config import settings
+from beerlog.config import get_database_engine
 
 warnings.filterwarnings("ignore", category=SAWarning)
 SelectOfScalar.inherit_cache = True  # type: ignore
 Select.inherit_cache = True  # type: ignore
 
-engine = create_engine(settings.database.url)
+engine = create_engine(get_database_engine())
 
 models.SQLModel.metadata.create_all(engine)  # type: ignore
 

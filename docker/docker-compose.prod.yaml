@@ -1,20 +1,32 @@
 services:
-  beerlog:
-    container_name: ${PROJECT_NAME}
-    image: ${PROJECT_NAME}
-    user: ${PROJECT_NAME}
-    hostname: docker
-    working_dir: ${WORK_DIR}
+  beerlog-database:
+    container_name: ${BEERLOG_DATABASE_NAME}
+    image: postgres:14.4
+    environment:
+      - POSTGRES_USER=${BEERLOG_PROJECT_NAME}
+      - POSTGRES_PASSWORD=${BEERLOG_PROJECT_NAME}
+      - POSTGRES_DB=${BEERLOG_DATABASE_NAME}
     ports:
-      - ${PORT}:${PORT}
+      - ${BEERLOG_DATABASE_PORT}:${BEERLOG_DATABASE_PORT}
+    volumes:
+      - ~/.postgres/beerlog_python_week/data/postgresql:/var/lib/postgresql/data
+
+  beerlog:
+    container_name: ${BEERLOG_PROJECT_NAME}
+    image: ${BEERLOG_PROJECT_NAME}
+    user: ${BEERLOG_PROJECT_NAME}
+    hostname: docker
+    working_dir: ${BEERLOG_WORK_DIR}
+    ports:
+      - ${BEERLOG_API_PORT}:${BEERLOG_API_PORT}
     entrypoint: ["uvicorn", "beerlog.api:api"]
-    command: ["--host=$HOST", "--port=$PORT"]
+    command: ["--host=${BEERLOG_API_HOST}", "--port=${BEERLOG_API_PORT}"]
     build:
       context: ./
       dockerfile: ./docker/Dockerfile
       target: production
       args:
-        PROJECT_NAME: ${PROJECT_NAME}
-        WORK_DIR: ${WORK_DIR}
-        USER_ID: ${USER_ID}
-        GROUP_ID: ${GROUP_ID}
+        PROJECT_NAME: ${BEERLOG_PROJECT_NAME}
+        WORK_DIR: ${BEERLOG_WORK_DIR}
+        USER_ID: ${BEERLOG_USER_ID}
+        GROUP_ID: ${BEERLOG_GROUP_ID}
