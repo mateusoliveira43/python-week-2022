@@ -89,6 +89,14 @@ O comando a seguir executa o serviço de API
 ```
 beerlog_api
 ```
+Para parar o serviço, execute `CTRL+C`.
+
+O comando a seguir executa o serviço jupyter
+```
+jupyter notebook password
+jupyter notebook --ip 0.0.0.0 --port 8000
+```
+Para parar o serviço, execute `CTRL+C`.
 
 ## Qualidade
 
