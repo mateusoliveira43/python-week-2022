@@ -89,6 +89,8 @@ O comando a seguir executa o serviço de API
 ```
 beerlog_api
 ```
+Para acessar a documentação da API, acesse `http://0.0.0.0:8000` ou `http://0.0.0.0:8000/redoc`.
+
 Para parar o serviço, execute `CTRL+C`.
 
 O comando a seguir executa o serviço jupyter

@@ -9,8 +9,6 @@ include = ["beerlog/settings.toml"]
 python = "^3.8"
 sqlmodel = "^0.0.6"
 fastapi = "^0.75.2"
-typer = "^0.4.1"
-rich = "^12.2.0"
 dynaconf = "^3.1.8"
 uvicorn = "^0.18.2"
 jupyter = "^1.0.0"
@@ -21,6 +19,8 @@ requests = "^2.28.1"
 html5lib = "^1.1"
 pandas = "^1.4.3"
 psycopg2 = "^2.9.3"
+typer = {extras = ["all"], version = "^0.6.1"}
+python-multipart = "^0.0.5"
 
 [tool.poetry.dev-dependencies]
 ipython = "^8.2.0"
@@ -38,8 +38,8 @@ Sphinx = "^5.0.2"
 sphinx-rtd-theme = "^1.0.0"
 
 [tool.poetry.scripts]
-beerlog_cli = "beerlog.__main__:main"
-beerlog_api = "beerlog.api:main"
+beerlog_cli = "beerlog.cli.__main__:CLI"
+beerlog_api = "beerlog.api.__main__:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -53,7 +53,7 @@ addopts = [
     "--cov-report=term-missing",
     "--cov-report=html:tests/coverage-results/htmlcov",
     "--cov=beerlog",
-    # "--cov-fail-under=100",
+    "--cov-fail-under=100",
 ]
 
 [tool.mypy]

@@ -1,0 +1,1 @@
+"""Beerlog CLI commands."""

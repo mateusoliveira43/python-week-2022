@@ -13,8 +13,37 @@ from sqlmodel import Session, create_engine
 from typer.testing import CliRunner, Result  # type: ignore
 
 from beerlog import models
-from beerlog.api import api
-from beerlog.cli import main
+from beerlog.api.__main__ import api
+from beerlog.cli.__main__ import CLI
+
+PATAGONIA = {
+    "name": "Patagonia",
+    "style": "IPA",
+    "flavor": 8,
+    "image": 6,
+    "cost": 4,
+}
+COFFEE = {
+    "name": "café",
+    "style": "ruim",
+    "flavor": -1,
+    "image": -1,
+    "cost": -1,
+}
+BEER_COMMON_INFO = {
+    "style": "Pilsen",
+    "flavor": 1,
+    "image": 1,
+    "cost": 1,
+}
+HEINEKEN = {
+    "name": "Heineken",
+    "style": "Larger",
+    "flavor": 7,
+    "image": 9,
+    "cost": 1,
+}
+
 
 ReturnT = TypeVar("ReturnT")
 
@@ -29,13 +58,15 @@ class DatabaseForTest(TestCase):
 
     def __init_subclass__(cls) -> None:
         """Init class that inherits from DatabaseForTest."""
+        cls.engine = create_engine(f"sqlite:///{tempfile.mkstemp()[1]}")
         for name, method in inspect.getmembers(cls, inspect.isfunction):
-            if name.startswith("test_"):
-                setattr(cls, name, cls.override_database(method))
+            setattr(cls, name, cls.override_database(method))
+        for name, method in inspect.getmembers(cls, inspect.ismethod):
+            setattr(cls, name, cls.override_database(method))
 
-    @staticmethod
+    @classmethod
     def override_database(
-        func: Callable[..., ReturnT]
+        cls, func: Callable[..., ReturnT]
     ) -> Callable[..., ReturnT]:
         """
         Override function to use test database.
@@ -53,9 +84,9 @@ class DatabaseForTest(TestCase):
         """
 
         @functools.wraps(func)
-        def wrap(self: DatabaseForTest, *args: Any, **kwargs: Any) -> ReturnT:
-            with patch("beerlog.database.engine", self.engine):
-                return func(self, *args, **kwargs)
+        def wrap(*args: Any, **kwargs: Any) -> ReturnT:
+            with patch("beerlog.database.engine", cls.engine):
+                return func(*args, **kwargs)
 
         return wrap
 
@@ -74,12 +105,11 @@ class DatabaseForTest(TestCase):
             Captured result of an invoked CLI script.
 
         """
-        return CliRunner().invoke(main, arguments)
+        return CliRunner().invoke(CLI, arguments)
 
     @classmethod
     def setUpClass(cls) -> None:
         """Run before the class tests."""
-        cls.engine = create_engine(f"sqlite:///{tempfile.mkstemp()[1]}")
         models.SQLModel.metadata.create_all(cls.engine)  # type: ignore
         cls.session = Session(cls.engine)
         cls.test_api = TestClient(api)

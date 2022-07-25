@@ -1,29 +1,18 @@
 """Beerlog serializers."""
 
-from datetime import datetime
+from __future__ import annotations
 
-from fastapi import HTTPException, status
+from typing import List, Optional
+
+from fastapi import Form
 from pydantic import BaseModel, validator  # pylint: disable=no-name-in-module
 from pydantic.fields import ModelField  # pylint: disable=no-name-in-module
 
-
-class BeerOut(BaseModel):
-    # pylint: disable=too-few-public-methods
-    """Beer model representation for endpoints responses."""
-
-    id_: int
-    name: str
-    style: str
-    flavor: int
-    image: int
-    cost: int
-    rate: int
-    date: datetime
+from beerlog.models import Beer
 
 
 class BeerIn(BaseModel):
-    # pylint: disable=too-few-public-methods
-    """Beer information for post endpoints."""
+    """Beer model serializer for input."""
 
     name: str
     style: str
@@ -53,13 +42,98 @@ class BeerIn(BaseModel):
 
         Raises
         ------
-        fastapi.HTTPException
-            If user input was invalid.
+        ValueError
+            If user input was invalid: not between 1 and 10.
 
         """
         if value < 1 or value > 10:
-            raise HTTPException(
-                detail=f"{field.name} must be between 1 and 10",
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            raise ValueError(
+                f"\N{no entry} {field.name} must be between 1 and 10"
             )
         return value
+
+    # pylint: disable=too-many-arguments
+    @classmethod
+    def form(
+        cls,
+        name: str = Form(...),
+        style: str = Form(...),
+        flavor: int = Form(...),
+        image: int = Form(...),
+        cost: int = Form(...),
+    ) -> BeerIn:
+        """
+        Generate form for API endpoints.
+
+        Parameters
+        ----------
+        name : str, optional
+            Beer's name, by default Form(...)
+        style : str, optional
+            Beer's style, by default Form(...)
+        flavor : int, optional
+            Beer's flavor, by default Form(...)
+        image : int, optional
+            Beer's image, by default Form(...)
+        cost : int, optional
+            Beer's cost, by default Form(...)
+
+        Returns
+        -------
+        BeerIn
+            Form for API endpoints.
+
+        """
+        return cls(
+            name=name, style=style, flavor=flavor, image=image, cost=cost
+        )
+
+
+class BeerOut(BaseModel):
+    # pylint: disable=too-few-public-methods
+    """Beer model serializer for output."""
+
+    id_: int
+    name: str
+    style: str
+    flavor: int
+    image: int
+    cost: int
+    rate: int
+    date: str
+
+
+class OperationFinished(BaseModel):
+    # pylint: disable=too-few-public-methods
+    """Finished database operation model serializer."""
+
+    was_successful: bool
+    message: str
+    beers: List[Optional[BeerOut]]
+
+
+def serialize_beer_model_for_output(beer: Beer) -> BeerOut:
+    """
+    Serialize beer model for user output.
+
+    Parameters
+    ----------
+    beer : Beer
+        Beer model.
+
+    Returns
+    -------
+    BeerOut
+        Serialized beer model for output.
+
+    """
+    return BeerOut(
+        id_=beer.id_,
+        name=beer.name,
+        style=beer.style,
+        flavor=beer.flavor,
+        image=beer.image,
+        cost=beer.cost,
+        rate=beer.rate,
+        date=beer.date.strftime("%d/%m/%Y"),
+    )

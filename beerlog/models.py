@@ -6,11 +6,14 @@ from typing import Dict, Optional
 
 from pydantic import validator
 from pydantic.fields import ModelField  # pylint: disable=no-name-in-module
+from sqlalchemy import UniqueConstraint
 from sqlmodel import Field, SQLModel
 
 
 class Beer(SQLModel, table=True):
     """Beer model representation."""
+
+    __table_args__ = (UniqueConstraint("name", "style"),)
 
     id_: Optional[int] = Field(primary_key=True, default=None, index=True)
     name: str
@@ -48,7 +51,10 @@ class Beer(SQLModel, table=True):
 
         """
         if value < 1 or value > 10:
-            raise RuntimeError(f"{field.name} must be between 1 and 10")
+            # ValueError do not stop validator with always=True being called
+            raise ArithmeticError(
+                f"\N{no entry} {field.name} must be between 1 and 10"
+            )
         return value
 
     # pylint: disable=no-self-argument, unused-argument

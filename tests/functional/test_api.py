@@ -1,11 +1,30 @@
 """API tests."""
 
-from typing import Dict, List
-
 from fastapi import status
+from fastapi.testclient import TestClient
 
+from beerlog.api.__main__ import api
 from beerlog.models import Beer
-from tests.conftest import DatabaseForTest
+from tests.conftest import (
+    BEER_COMMON_INFO,
+    HEINEKEN,
+    PATAGONIA,
+    DatabaseForTest,
+)
+
+BEER_ENDPOINT = "/beers/"
+
+
+def test_docs() -> None:
+    # noqa: D103 pylint: disable=missing-function-docstring
+    response = TestClient(api).get("/")
+    assert response.status_code == status.HTTP_200_OK
+
+
+def test_redoc() -> None:
+    # noqa: D103 pylint: disable=missing-function-docstring
+    response = TestClient(api).get("/redoc")
+    assert response.status_code == status.HTTP_200_OK
 
 
 class TestAddRoute(DatabaseForTest):
@@ -14,19 +33,14 @@ class TestAddRoute(DatabaseForTest):
     def test_add_beer(self) -> None:
         # noqa: D102 pylint: disable=missing-function-docstring
         response = self.test_api.post(
-            "/beers/",
-            json={
-                "name": "Skol",
-                "style": "KornIPA",
-                "flavor": 1,
-                "image": 1,
-                "cost": 2,
-            },
+            BEER_ENDPOINT,
+            data=PATAGONIA,
         )
         assert response.status_code == status.HTTP_201_CREATED
         result = response.json()
-        assert result["name"] == "Skol"
-        assert result["id_"] == 1
+        assert result["was_successful"] is True
+        assert "beer added" in result["message"]
+        assert len(result["beers"]) == 1
 
 
 class TestListEmpty(DatabaseForTest):
@@ -34,10 +48,10 @@ class TestListEmpty(DatabaseForTest):
 
     def test_list_beers_empty(self) -> None:
         # noqa: D102 pylint: disable=missing-function-docstring
-        response = self.test_api.get("/beers/")
-        assert response.status_code == status.HTTP_200_OK
+        response = self.test_api.get(BEER_ENDPOINT)
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
         result = response.json()
-        assert len(result) == 0
+        assert "no beer" in result["detail"]
 
 
 class TestList(DatabaseForTest):
@@ -48,22 +62,32 @@ class TestList(DatabaseForTest):
         # noqa: D102 pylint: disable=missing-function-docstring
         super().setUpClass()
 
-        common_info = {
-            "style": "Pilsen",
-            "flavor": 1,
-            "image": 1,
-            "cost": 1,
-        }
-
-        cls.session.add(Beer(name="Beck's", **common_info))
-        cls.session.add(Beer(name="Brahma", **common_info))
+        cls.session.add(Beer(name="Beck's", **BEER_COMMON_INFO))
+        cls.session.add(Beer(name="Brahma", **BEER_COMMON_INFO))
+        cls.session.add(Beer(**HEINEKEN))
         cls.session.commit()
 
-    def test_list_beers(self) -> None:
+    def test_list_beers_without_style(self) -> None:
         # noqa: D102 pylint: disable=missing-function-docstring
-        response = self.test_api.get("/beers/")
+        response = self.test_api.get(BEER_ENDPOINT)
         assert response.status_code == status.HTTP_200_OK
-        result: List[Dict[str, str]] = response.json()
-        assert len(result) == 2
-        assert "Beck's" in result[0].values()
-        assert "Brahma" in result[1].values()
+        result = response.json()
+        assert result["was_successful"] is True
+        assert "3 beer(s)" in result["message"]
+        assert len(result["beers"]) == 3
+
+    def test_list_beers_with_style(self) -> None:
+        # noqa: D102 pylint: disable=missing-function-docstring
+        response = self.test_api.get(f"{BEER_ENDPOINT}?style=Pilsen")
+        assert response.status_code == status.HTTP_200_OK
+        result = response.json()
+        assert result["was_successful"] is True
+        assert "2 beer(s)" in result["message"]
+        assert len(result["beers"]) == 2
+
+    def test_list_beers_empty_with_style(self) -> None:
+        # noqa: D102 pylint: disable=missing-function-docstring
+        response = self.test_api.get(f"{BEER_ENDPOINT}?style=IPA")
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        result = response.json()
+        assert "No beer" in result["detail"]
