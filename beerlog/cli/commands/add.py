@@ -22,11 +22,11 @@ def add(
         Beer's name.
     style : str
         Beer's style.
-    flavor : int, optional
+    flavor : int
         Beer's flavor, between 1 and 10, by default typer.Option(...)
-    image : int, optional
+    image : int
         Beer's image, between 1 and 10, by default typer.Option(...)
-    cost : int, optional
+    cost : int
         Beer's cost, between 1 and 10, by default typer.Option(...)
 
     """

@@ -16,6 +16,7 @@ class Beer(SQLModel, table=True):
     __table_args__ = (UniqueConstraint("name", "style"),)
 
     id_: Optional[int] = Field(primary_key=True, default=None, index=True)
+    # TODO add constraint in str/int size
     name: str
     style: str
     flavor: int

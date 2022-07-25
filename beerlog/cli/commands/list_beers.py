@@ -17,7 +17,7 @@ def list_beers(style: Optional[str] = typer.Argument(None)) -> None:
 
     Parameters
     ----------
-    style : Optional[str], optional
+    style : Optional[str]
         Filter of beer's style to be applied, by default typer.Argument(None)
 
     """

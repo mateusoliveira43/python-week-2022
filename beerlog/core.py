@@ -80,7 +80,7 @@ def get_beers_from_database(
 
     Parameters
     ----------
-    style : Optional[str], optional
+    style : Optional[str]
         Filter of beer's style to be applied, by default None.
 
     Returns

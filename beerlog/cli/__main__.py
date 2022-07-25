@@ -69,7 +69,7 @@ def add_command(
     ----------
     command : Callable[..., Any]
         Command to be added.
-    name : Optional[str], optional
+    name : Optional[str]
         Name of the command, by default None
 
     """

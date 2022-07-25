@@ -24,7 +24,7 @@ async def add_beers(
 
     Parameters
     ----------
-    beer_in : BeerIn, optional
+    beer_in : BeerIn
         Beer information, by default Depends(BeerIn.form)
 
     Returns
@@ -46,7 +46,7 @@ async def list_beers(style: Optional[str] = None) -> OperationFinished:
 
     Parameters
     ----------
-    style : Optional[str], optional
+    style : Optional[str]
         Filter of beer's style to be applied, by default None
 
     Returns

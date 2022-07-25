@@ -21,7 +21,7 @@ def parse_result(result: OperationFinished) -> OperationFinished:
 
     Raises
     ------
-    HTTPException
+    fastapi.HTTPException
         If database operation was not successful.
 
     """

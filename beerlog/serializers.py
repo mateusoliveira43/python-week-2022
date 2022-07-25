@@ -67,15 +67,15 @@ class BeerIn(BaseModel):
 
         Parameters
         ----------
-        name : str, optional
+        name : str
             Beer's name, by default Form(...)
-        style : str, optional
+        style : str
             Beer's style, by default Form(...)
-        flavor : int, optional
+        flavor : int
             Beer's flavor, by default Form(...)
-        image : int, optional
+        image : int
             Beer's image, by default Form(...)
-        cost : int, optional
+        cost : int
             Beer's cost, by default Form(...)
 
         Returns
